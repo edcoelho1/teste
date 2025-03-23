@@ -1,4 +1,5 @@
 import customtkinter as ctk #importar o q faz janelas
+import math as m
 resultado="a" #valor inicial (nulo)
 def botao_0():
     global resultado
@@ -55,28 +56,56 @@ def botao_multiplicação():
 def botao_divisão():
     global resultado
     resultado= resultado + "/"
+    print(resultado[1:])
 def botao_exp():
     global resultado
     resultado= resultado + "**"
+    print(resultado[1:])
+def botao_parenteses_abre():
+    global resultado
+    resultado= resultado + "("
+    print(resultado[1:])
+def botao_parenteses_fecha():
+    global resultado
+    resultado= resultado + ")"
+    print(resultado[1:])
+def botao_clear():
+    global resultado
+    resultado= "a"
+def botao_backspace():
+    global resultado
+    resultado= resultado[:-1]
+    print(resultado[1:])
+def botao_pi():
+    global resultado
+    resultado= resultado + str(m.pi)
+    print(resultado[1:])
+def botao_e():
+    global resultado
+    resultado= resultado + str(m.e)
+    print(resultado[1:])
 def botao_igual():
     global resultado
     resultado=resultado.replace("a","")
     try:
-        while resultado[0] == '0' and resultado[1] not in {"+", "-", "*", "/", "**"}:
+        while resultado[0] == '0' and resultado[1] not in {"+", "-", "*", "/", "**"} or resultado[0] in {"+", "-", "*", "/", "**"}:
             resultado=resultado[1:]
         print(eval(resultado))
     except ZeroDivisionError:
         print("Não é possível dividir por 0.")
     except IndexError:
         print("Por favor, insira ao menos 2 dígitos e uma operação!")
+    except SyntaxError:
+        print("Por favor, insira o parêntese de abertura antes do de fechada!")
     resultado="a" #Retornando ao valor inicial
+
 
 
 ctk.set_appearance_mode("dark") #criar e configurar
 ctk.set_default_color_theme("blue")
 
 janela=ctk.CTk()
-janela.geometry("700x200")#Dimensões da janela
+janela.geometry("1000x200")#Dimensões da janela
 
 botão_0=ctk.CTkButton(janela , text="0", command=botao_0)
 botão_0.grid(row=4, column=0, padx=10, pady=10)
@@ -125,5 +154,23 @@ botão_exp.grid(row=4, column=3, padx=10, pady=10)
 
 botão_i=ctk.CTkButton(janela , text="=", command=botao_igual)
 botão_i.grid(row=4, column=4, padx=10, pady=10)
+
+botão_p_a=ctk.CTkButton(janela , text="(", command=botao_parenteses_abre)
+botão_p_a.grid(row=3, column=5, padx=10, pady=10)
+
+botão_p_f=ctk.CTkButton(janela , text=")", command=botao_parenteses_fecha)
+botão_p_f.grid(row=4, column=5, padx=10, pady=10)
+
+botão_clear=ctk.CTkButton(janela, text="C", command=botao_clear)
+botão_clear.grid(row=2, column=5, padx=10, pady=10)
+
+botão_back=ctk.CTkButton(janela, text="BACK", command=botao_backspace)
+botão_back.grid(row=0, column=5, padx=10, pady=10)
+
+botão_pi=ctk.CTkButton(janela, text="pi", command=botao_pi)
+botão_pi.grid(row=0, column=6, padx=10, pady=10)
+
+botão_e=ctk.CTkButton(janela, text="e", command=botao_e)
+botão_e.grid(row=2, column=6, padx=10, pady=10)
 
 janela.mainloop() #Rodar a janela
