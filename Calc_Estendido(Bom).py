@@ -1,176 +1,83 @@
 import customtkinter as ctk #importar o q faz janelas
 import math as m
-resultado="a" #valor inicial (nulo)
-def botao_0():
-    global resultado
-    resultado= resultado+ "0"
-    print(resultado[1:])
-def botao_1():
-    global resultado
-    resultado= resultado + "1"
-    print(resultado[1:])
-def botao_2():
-    global resultado
-    resultado= resultado + "2"
-    print(resultado[1:])
-def botao_3():
-    global resultado
-    resultado= resultado + "3"
-    print(resultado[1:])
-def botao_4():
-    global resultado
-    resultado= resultado + "4"
-    print(resultado[1:])
-def botao_5():
-    global resultado
-    resultado= resultado + "5"
-    print(resultado[1:])
-def botao_6():
-    global resultado
-    resultado= resultado + "6"
-    print(resultado[1:])
-def botao_7():
-    global resultado
-    resultado= resultado + "7"
-    print(resultado[1:])
-def botao_8():
-    global resultado
-    resultado= resultado + "8"
-    print(resultado[1:])
-def botao_9():
-    global resultado
-    resultado= resultado + "9"
-    print(resultado[1:])
-def botao_soma():
-    global resultado
-    resultado= resultado + "+"
-    print(resultado[1:])
-def botao_subtração():
-    global resultado
-    resultado= resultado + "-"
-    print(resultado[1:])
-def botao_multiplicação():
-    global resultado
-    resultado= resultado + "*"
-    print(resultado[1:])
-def botao_divisão():
-    global resultado
-    resultado= resultado + "/"
-    print(resultado[1:])
-def botao_exp():
-    global resultado
-    resultado= resultado + "**"
-    print(resultado[1:])
-def botao_parenteses_abre():
-    global resultado
-    resultado= resultado + "("
-    print(resultado[1:])
-def botao_parenteses_fecha():
-    global resultado
-    resultado= resultado + ")"
-    print(resultado[1:])
-def botao_clear():
-    global resultado
-    resultado= "a"
-def botao_backspace():
-    global resultado
-    resultado= resultado[:-1]
-    print(resultado[1:])
-def botao_pi():
-    global resultado
-    resultado= resultado + str(m.pi)
-    print(resultado[1:])
-def botao_e():
-    global resultado
-    resultado= resultado + str(m.e)
-    print(resultado[1:])
-def botao_igual():
-    global resultado
-    resultado=resultado.replace("a","")
-    try:
-        while resultado[0] == '0' and resultado[1] not in {"+", "-", "*", "/", "**"} or resultado[0] in {"+", "-", "*", "/", "**"}:
-            resultado=resultado[1:]
-        print(eval(resultado))
-    except ZeroDivisionError:
-        print("Não é possível dividir por 0.")
-    except IndexError:
-        print("Por favor, insira ao menos 2 dígitos e uma operação!")
-    except SyntaxError:
-        print("Por favor, insira o parêntese de abertura antes do de fechada!")
-    resultado="a" #Retornando ao valor inicial
 
+janela=ctk.CTk() #Declarar a janela
+janela.geometry("400x500")#Dimensões da janela
+janela.title("Calculadora")
 
-
-ctk.set_appearance_mode("dark") #criar e configurar
+ctk.set_appearance_mode("dark") #Cores
 ctk.set_default_color_theme("blue")
 
-janela=ctk.CTk()
-janela.geometry("1000x200")#Dimensões da janela
+def atualizar_display(valor):
+    display_var.set(display_var.get() + valor)
 
-botão_0=ctk.CTkButton(janela , text="0", command=botao_0)
-botão_0.grid(row=4, column=0, padx=10, pady=10)
+#Notas para si: var.set(a) é mandar a var virar um valor a, var.get() é pegar o valor da var.
+def calcular():
+    try:
+        resultado = eval(display_var.get())  # Usando eval para calcular
+        display_var.set(str(resultado))  # Atualiza o display
+    except Exception as e:
+        display_var.set("Erro")  # Se houver erro na expressão, mostra "Erro"
 
-botão_1=ctk.CTkButton(janela , text="1", command=botao_1)
-botão_1.grid(row=3, column=0, padx=10, pady=10)
+def limpar():
+    display_var.set("")
 
-botão_2=ctk.CTkButton(janela , text="2", command=botao_2)
-botão_2.grid(row=3, column=2, padx=10, pady=10)
+display_var= ctk.StringVar() #Variável ligada ao label
 
-botão_3=ctk.CTkButton(janela , text="3", command=botao_3)
-botão_3.grid(row=3, column=3, padx=10, pady=10)
+display_label=ctk.CTkLabel(janela, textvariable=display_var, font=("Arial",24), anchor="e", width=300, height=50)
+display_label.grid(row=0,column=0,columnspan=4,padx=10,pady=20)
 
-botão_4=ctk.CTkButton(janela , text="4", command=botao_4)
-botão_4.grid(row=2, column=0, padx=10, pady=10)
+#Declarando os botões
 
-botão_5=ctk.CTkButton(janela , text="5", command=botao_5)
-botão_5.grid(row=2, column=2, padx=10, pady=10)
+botao_1 = ctk.CTkButton(janela,text="1",width=60,height=60, command=lambda: atualizar_display("1"))
+botao_2 = ctk.CTkButton(janela,text="2",width=60,height=60, command=lambda: atualizar_display("2"))
+botao_3 = ctk.CTkButton(janela,text="3",width=60,height=60, command=lambda: atualizar_display("3"))
+botao_4 = ctk.CTkButton(janela,text="4",width=60,height=60, command=lambda: atualizar_display("4"))
+botao_5 = ctk.CTkButton(janela,text="5",width=60,height=60, command=lambda: atualizar_display("5"))
+botao_6 = ctk.CTkButton(janela,text="6",width=60,height=60, command=lambda: atualizar_display("6"))
+botao_7 = ctk.CTkButton(janela,text="7",width=60,height=60, command=lambda: atualizar_display("7"))
+botao_8 = ctk.CTkButton(janela,text="8",width=60,height=60, command=lambda: atualizar_display("8"))
+botao_9 = ctk.CTkButton(janela,text="9",width=60,height=60, command=lambda: atualizar_display("9"))
+botao_0 = ctk.CTkButton(janela,text="0",width=60,height=60, command=lambda: atualizar_display("0"))
 
-botão_6=ctk.CTkButton(janela , text="6", command=botao_6)
-botão_6.grid(row=2, column=3, padx=10, pady=10)
+botao_adi = ctk.CTkButton(janela,text="+",width=60,height=60, command=lambda: atualizar_display("+"))
+botao_sub = ctk.CTkButton(janela,text="-",width=60,height=60, command=lambda: atualizar_display("-"))
+botao_mul = ctk.CTkButton(janela,text="*",width=60,height=60, command=lambda: atualizar_display("*"))
+botao_div = ctk.CTkButton(janela,text="/",width=60,height=60, command=lambda: atualizar_display("/"))
+botao_exp = ctk.CTkButton(janela,text="**",width=60,height=60, command=lambda: atualizar_display("**"))
+botao_pi = ctk.CTkButton(janela,text="π",width=60,height=60, command=lambda: atualizar_display(str(m.pi)))
+botao_e = ctk.CTkButton(janela,text="e",width=60,height=60, command=lambda: atualizar_display(str(m.e)))
 
-botão_7=ctk.CTkButton(janela , text="7", command=botao_7)
-botão_7.grid(row=0, column=0, padx=10, pady=10)
+botao_calc = ctk.CTkButton(janela,text="=",width=60,height=60, command=calcular)
+botao_lim = ctk.CTkButton(janela,text="C",width=60,height=60, command=limpar)
 
-botão_8=ctk.CTkButton(janela , text="8", command=botao_8)
-botão_8.grid(row=0, column=2, padx=10, pady=10)
+#Organizando os botões
 
-botão_9=ctk.CTkButton(janela , text="9", command=botao_9)
-botão_9.grid(row=0, column=3, padx=10, pady=10)
+botao_1.grid(row=1, column=0, padx=5, pady=5)
+botao_2.grid(row=1, column=1, padx=5, pady=5)
+botao_3.grid(row=1, column=2, padx=5, pady=5)
 
-botão_so=ctk.CTkButton(janela , text="+", command=botao_soma)
-botão_so.grid(row=0, column=4, padx=10, pady=10)
+botao_4.grid(row=2, column=0, padx=5, pady=5)
+botao_5.grid(row=2, column=1, padx=5, pady=5)
+botao_6.grid(row=2, column=2, padx=5, pady=5)
 
-botão_su=ctk.CTkButton(janela , text="-", command=botao_subtração)
-botão_su.grid(row=2, column=4, padx=10, pady=10)
+botao_7.grid(row=3, column=0, padx=5, pady=5)
+botao_8.grid(row=3, column=1, padx=5, pady=5)
+botao_9.grid(row=3, column=2, padx=5, pady=5)
 
-botão_mu=ctk.CTkButton(janela , text="*", command=botao_multiplicação)
-botão_mu.grid(row=3, column=4, padx=10, pady=10)
+botao_0.grid(row=4, column=1, padx=5, pady=5)
 
-botão_di=ctk.CTkButton(janela , text="/", command=botao_divisão)
-botão_di.grid(row=4, column=2, padx=10, pady=10)
+botao_adi.grid(row=1, column=3, padx=5, pady=5)
+botao_sub.grid(row=2, column=3, padx=5, pady=5)
+botao_mul.grid(row=3, column=3, padx=5, pady=5)
+botao_div.grid(row=4, column=3, padx=5, pady=5)
+botao_exp.grid(row=1, column=5, padx=5, pady=5)
+botao_pi.grid(row=2, column=5, padx=5,pady=5)
+botao_e.grid(row=3, column=5, padx=5, pady=5)
 
-botão_exp=ctk.CTkButton(janela , text="^", command=botao_exp)
-botão_exp.grid(row=4, column=3, padx=10, pady=10)
+botao_calc.grid(row=4, column=2, padx=5, pady=5)
+botao_lim.grid(row=4, column=0, padx=5, pady=5)
 
-botão_i=ctk.CTkButton(janela , text="=", command=botao_igual)
-botão_i.grid(row=4, column=4, padx=10, pady=10)
 
-botão_p_a=ctk.CTkButton(janela , text="(", command=botao_parenteses_abre)
-botão_p_a.grid(row=3, column=5, padx=10, pady=10)
 
-botão_p_f=ctk.CTkButton(janela , text=")", command=botao_parenteses_fecha)
-botão_p_f.grid(row=4, column=5, padx=10, pady=10)
-
-botão_clear=ctk.CTkButton(janela, text="C", command=botao_clear)
-botão_clear.grid(row=2, column=5, padx=10, pady=10)
-
-botão_back=ctk.CTkButton(janela, text="BACK", command=botao_backspace)
-botão_back.grid(row=0, column=5, padx=10, pady=10)
-
-botão_pi=ctk.CTkButton(janela, text="pi", command=botao_pi)
-botão_pi.grid(row=0, column=6, padx=10, pady=10)
-
-botão_e=ctk.CTkButton(janela, text="e", command=botao_e)
-botão_e.grid(row=2, column=6, padx=10, pady=10)
-
-janela.mainloop() #Rodar a janela
+janela.mainloop()
